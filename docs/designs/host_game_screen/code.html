@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quiz Online — Layar Host (Reveal)</title>
+<!-- SHARED <head> for all Quiz Online mockups. Copy the <script src=tailwind>, the font <link>s, and the entire <script id="tailwind-config"> block verbatim into each screen. Add screen-specific <style> as needed. -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&amp;family=Inter:wght@400;500;600&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+    tailwind.config = {
+        darkMode: "class",
+        theme: {
+            extend: {
+                colors: {
+                    "primary": "#6D28D9",
+                    "primary-container": "#5B21B6",
+                    "on-primary": "#FFFFFF",
+                    "on-primary-container": "#dac5ff",
+                    "secondary": "#831ada",
+                    "on-secondary": "#ffffff",
+                    "secondary-container": "#9e41f5",
+                    "bg": "#F8FAFC",
+                    "background": "#fef7ff",
+                    "surface": "#FFFFFF",
+                    "surface-muted": "#F1F5F9",
+                    "surface-dim": "#dfd7e5",
+                    "surface-bright": "#fef7ff",
+                    "surface-container-lowest": "#ffffff",
+                    "surface-container-low": "#f9f1ff",
+                    "surface-container": "#f3ebf9",
+                    "surface-container-high": "#ede5f3",
+                    "surface-container-highest": "#e8e0ee",
+                    "surface-variant": "#e8e0ee",
+                    "on-surface": "#1d1a24",
+                    "on-surface-variant": "#4a4455",
+                    "inverse-surface": "#332f39",
+                    "inverse-on-surface": "#f6eefc",
+                    "outline": "#7b7486",
+                    "outline-variant": "#ccc3d7",
+                    "border": "#E2E8F0",
+                    "text-strong": "#0F172A",
+                    "text-muted": "#64748B",
+                    "on-background": "#1d1a24",
+                    "primary-fixed": "#ebddff",
+                    "primary-fixed-dim": "#d3bbff",
+                    "inverse-primary": "#d3bbff",
+                    "success": "#16A34A",
+                    "warning": "#D97706",
+                    "info": "#2563EB",
+                    "error": "#DC2626",
+                    "on-error": "#ffffff",
+                    "error-container": "#ffdad6",
+                    "on-error-container": "#93000a",
+                    "answer-red": "#E21B3C",
+                    "answer-blue": "#1368CE",
+                    "answer-yellow": "#D89E00",
+                    "answer-green": "#26890C",
+                    "podium-gold": "#FBBF24",
+                    "podium-silver": "#CBD5E1",
+                    "podium-bronze": "#D97706"
+                },
+                borderRadius: {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "2xl": "1rem",
+                    "full": "9999px"
+                },
+                spacing: {
+                    "scale-base": "4px",
+                    "gutter": "16px",
+                    "margin-mobile": "12px",
+                    "container-host": "896px",
+                    "container-form": "512px"
+                },
+                fontFamily: {
+                    "display": ["Poppins"],
+                    "display-xl": ["Poppins"],
+                    "display-xl-mobile": ["Poppins"],
+                    "headline-1": ["Poppins"],
+                    "headline-2": ["Poppins"],
+                    "poppins": ["Poppins"],
+                    "body": ["Inter"],
+                    "label": ["Inter"],
+                    "caption": ["Inter"]
+                },
+                fontSize: {
+                    "display-xl": ["60px", {"lineHeight": "60px", "letterSpacing": "0.025em", "fontWeight": "800"}],
+                    "display-xl-mobile": ["48px", {"lineHeight": "48px", "fontWeight": "800"}],
+                    "display": ["36px", {"lineHeight": "40px", "fontWeight": "700"}],
+                    "headline-1": ["24px", {"lineHeight": "30px", "fontWeight": "700"}],
+                    "headline-2": ["20px", {"lineHeight": "26px", "fontWeight": "600"}],
+                    "body": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "label": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                    "caption": ["12px", {"lineHeight": "16px", "fontWeight": "400"}]
+                }
+            }
+        }
+    }
+</script>
+<style>
+    .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+    /* Immersive gameplay background (lobby, gameplay, results, join, participant screens) */
+    .hero-gradient { background: linear-gradient(135deg, #6D28D9 0%, #9333EA 50%, #DB2777 100%); }
+</style>
+<style>
+    body { font-family: 'Inter', sans-serif; }
+    .material-symbols-outlined.fill { font-variation-settings: 'FILL' 1, 'wght' 600, 'GRAD' 0, 'opsz' 24; }
+    .bar-fill { transition: width .6s ease; }
+</style>
+</head>
+<body class="bg-bg text-text-strong min-h-screen">
+
+    <main class="max-w-6xl mx-auto p-6 flex flex-col gap-6">
+
+        <!-- TOP BAR -->
+        <header class="flex items-center justify-between gap-4">
+            <!-- Left: question progress pill -->
+            <div class="bg-surface border border-border rounded-full px-5 py-2.5 shadow-sm flex items-center gap-2">
+                <span class="material-symbols-outlined fill text-primary text-xl">quiz</span>
+                <span class="font-display font-bold text-headline-2 tabular-nums">Soal 3/10</span>
+            </div>
+
+            <!-- Center: countdown finished -->
+            <div class="flex items-center gap-3">
+                <div class="relative w-16 h-16 flex items-center justify-center">
+                    <svg class="w-16 h-16 -rotate-90" viewBox="0 0 36 36">
+                        <circle cx="18" cy="18" r="16" fill="none" stroke="#FDE68A" stroke-width="3"></circle>
+                        <circle cx="18" cy="18" r="16" fill="none" stroke="#D97706" stroke-width="3" stroke-dasharray="100 100" stroke-linecap="round"></circle>
+                    </svg>
+                    <span class="absolute font-display font-extrabold text-2xl text-warning tabular-nums">0</span>
+                </div>
+                <span class="font-headline-2 font-semibold text-warning uppercase tracking-wide">Waktu habis</span>
+            </div>
+
+            <!-- Right: answered pill -->
+            <div class="bg-surface border border-border rounded-full px-5 py-2.5 shadow-sm flex items-center gap-2">
+                <span class="material-symbols-outlined fill text-success text-xl">groups</span>
+                <span class="font-display font-bold text-headline-2 tabular-nums">24/24 menjawab</span>
+            </div>
+        </header>
+
+        <!-- QUESTION -->
+        <h1 class="font-display text-4xl font-bold text-text-strong text-center px-4 py-2">
+            Planet terbesar di tata surya?
+        </h1>
+
+        <!-- ANSWER GRID 2x2 -->
+        <div class="grid grid-cols-2 gap-4">
+            <!-- Opt1 red — WRONG -->
+            <div class="bg-answer-red rounded-2xl p-6 text-white font-bold text-lg flex items-center gap-3 grayscale opacity-50 transition">
+                <span class="material-symbols-outlined fill text-2xl">change_history</span>
+                <span class="flex-1">Mars</span>
+            </div>
+            <!-- Opt2 blue — CORRECT -->
+            <div class="bg-answer-blue rounded-2xl p-6 text-white font-bold text-lg flex items-center gap-3 scale-105 ring-4 ring-white shadow-lg transition">
+                <span class="material-symbols-outlined fill text-2xl">diamond</span>
+                <span class="flex-1">Jupiter</span>
+                <span class="material-symbols-outlined fill text-3xl">check_circle</span>
+            </div>
+            <!-- Opt3 yellow — WRONG -->
+            <div class="bg-answer-yellow rounded-2xl p-6 text-white font-bold text-lg flex items-center gap-3 grayscale opacity-50 transition">
+                <span class="material-symbols-outlined fill text-2xl">circle</span>
+                <span class="flex-1">Saturnus</span>
+            </div>
+            <!-- Opt4 green — WRONG -->
+            <div class="bg-answer-green rounded-2xl p-6 text-white font-bold text-lg flex items-center gap-3 grayscale opacity-50 transition">
+                <span class="material-symbols-outlined fill text-2xl">square</span>
+                <span class="flex-1">Bumi</span>
+            </div>
+        </div>
+
+        <!-- TWO COLUMN AREA -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+            <!-- (1) Answer distribution -->
+            <section class="bg-surface border border-border rounded-xl p-4 shadow-sm">
+                <h2 class="font-headline-2 font-semibold text-text-strong mb-4">Distribusi Jawaban</h2>
+                <div class="flex flex-col gap-3">
+                    <!-- Mars 5 -->
+                    <div class="flex items-center gap-3">
+                        <span class="material-symbols-outlined fill text-answer-red text-xl w-6">change_history</span>
+                        <div class="flex-1 bg-surface-muted rounded-lg h-9 relative overflow-hidden">
+                            <div class="bar-fill bg-answer-red h-full rounded-lg flex items-center justify-end pr-3" style="width:36%;">
+                                <span class="text-white font-bold tabular-nums">5</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Jupiter 14 CORRECT -->
+                    <div class="flex items-center gap-3">
+                        <span class="material-symbols-outlined fill text-answer-blue text-xl w-6">diamond</span>
+                        <div class="flex-1 bg-surface-muted rounded-lg h-9 relative overflow-hidden">
+                            <div class="bar-fill bg-answer-blue h-full rounded-lg flex items-center justify-end gap-2 pr-3" style="width:100%;">
+                                <span class="material-symbols-outlined fill text-white text-lg">check</span>
+                                <span class="text-white font-bold tabular-nums">14</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Saturnus 3 -->
+                    <div class="flex items-center gap-3">
+                        <span class="material-symbols-outlined fill text-answer-yellow text-xl w-6">circle</span>
+                        <div class="flex-1 bg-surface-muted rounded-lg h-9 relative overflow-hidden">
+                            <div class="bar-fill bg-answer-yellow h-full rounded-lg flex items-center justify-end pr-3" style="width:22%;">
+                                <span class="text-white font-bold tabular-nums">3</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Bumi 2 -->
+                    <div class="flex items-center gap-3">
+                        <span class="material-symbols-outlined fill text-answer-green text-xl w-6">square</span>
+                        <div class="flex-1 bg-surface-muted rounded-lg h-9 relative overflow-hidden">
+                            <div class="bar-fill bg-answer-green h-full rounded-lg flex items-center justify-end pr-3" style="width:15%;">
+                                <span class="text-white font-bold tabular-nums">2</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- (2) Interim leaderboard -->
+            <section class="bg-surface border border-border rounded-xl p-4 shadow-sm">
+                <h2 class="font-headline-2 font-semibold text-text-strong mb-4">Papan Peringkat</h2>
+                <ol class="flex flex-col gap-2">
+                    <!-- #1 highlighted -->
+                    <li class="flex items-center gap-3 bg-primary text-white rounded-lg px-4 py-3 shadow-sm">
+                        <span class="font-display font-extrabold text-xl w-8 tabular-nums">1</span>
+                        <span class="material-symbols-outlined fill text-podium-gold">trophy</span>
+                        <span class="flex-1 font-semibold">Nadia</span>
+                        <span class="font-display font-bold tabular-nums text-lg">8.450</span>
+                    </li>
+                    <li class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-surface-muted">
+                        <span class="font-display font-bold text-lg w-8 text-text-muted tabular-nums">2</span>
+                        <span class="flex-1 font-medium text-text-strong">Rafi</span>
+                        <span class="font-display font-bold tabular-nums text-lg text-text-strong">7.920</span>
+                    </li>
+                    <li class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-surface-muted">
+                        <span class="font-display font-bold text-lg w-8 text-text-muted tabular-nums">3</span>
+                        <span class="flex-1 font-medium text-text-strong">Salsa</span>
+                        <span class="font-display font-bold tabular-nums text-lg text-text-strong">7.310</span>
+                    </li>
+                    <li class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-surface-muted">
+                        <span class="font-display font-bold text-lg w-8 text-text-muted tabular-nums">4</span>
+                        <span class="flex-1 font-medium text-text-strong">Bima</span>
+                        <span class="font-display font-bold tabular-nums text-lg text-text-strong">6.880</span>
+                    </li>
+                    <li class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-surface-muted">
+                        <span class="font-display font-bold text-lg w-8 text-text-muted tabular-nums">5</span>
+                        <span class="flex-1 font-medium text-text-strong">Citra</span>
+                        <span class="font-display font-bold tabular-nums text-lg text-text-strong">6.540</span>
+                    </li>
+                </ol>
+            </section>
+        </div>
+
+        <!-- BOTTOM ACTION -->
+        <div class="flex justify-end">
+            <button onclick="window.location.href='../host_final_results/code.html'" class="bg-primary hover:bg-primary-container text-on-primary font-display font-bold text-headline-2 rounded-xl px-8 min-h-[44px] flex items-center gap-2 shadow-sm transition">
+                Berikutnya
+                <span class="material-symbols-outlined fill text-2xl">arrow_forward</span>
+            </button>
+        </div>
+
+    </main>
+
+</body>
+</html>

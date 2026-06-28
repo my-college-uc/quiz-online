@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="id" class="h-full">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Quiz Online — Soal Peserta</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&amp;family=Inter:wght@400;500;600&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+    tailwind.config = {
+        darkMode: "class",
+        theme: {
+            extend: {
+                colors: {
+                    "primary": "#6D28D9",
+                    "primary-container": "#5B21B6",
+                    "on-primary": "#FFFFFF",
+                    "on-primary-container": "#dac5ff",
+                    "secondary": "#831ada",
+                    "on-secondary": "#ffffff",
+                    "secondary-container": "#9e41f5",
+                    "bg": "#F8FAFC",
+                    "background": "#fef7ff",
+                    "surface": "#FFFFFF",
+                    "surface-muted": "#F1F5F9",
+                    "surface-dim": "#dfd7e5",
+                    "surface-bright": "#fef7ff",
+                    "surface-container-lowest": "#ffffff",
+                    "surface-container-low": "#f9f1ff",
+                    "surface-container": "#f3ebf9",
+                    "surface-container-high": "#ede5f3",
+                    "surface-container-highest": "#e8e0ee",
+                    "surface-variant": "#e8e0ee",
+                    "on-surface": "#1d1a24",
+                    "on-surface-variant": "#4a4455",
+                    "inverse-surface": "#332f39",
+                    "inverse-on-surface": "#f6eefc",
+                    "outline": "#7b7486",
+                    "outline-variant": "#ccc3d7",
+                    "border": "#E2E8F0",
+                    "text-strong": "#0F172A",
+                    "text-muted": "#64748B",
+                    "on-background": "#1d1a24",
+                    "primary-fixed": "#ebddff",
+                    "primary-fixed-dim": "#d3bbff",
+                    "inverse-primary": "#d3bbff",
+                    "success": "#16A34A",
+                    "warning": "#D97706",
+                    "info": "#2563EB",
+                    "error": "#DC2626",
+                    "on-error": "#ffffff",
+                    "error-container": "#ffdad6",
+                    "on-error-container": "#93000a",
+                    "answer-red": "#E21B3C",
+                    "answer-blue": "#1368CE",
+                    "answer-yellow": "#D89E00",
+                    "answer-green": "#26890C",
+                    "podium-gold": "#FBBF24",
+                    "podium-silver": "#CBD5E1",
+                    "podium-bronze": "#D97706"
+                },
+                borderRadius: {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "2xl": "1rem",
+                    "full": "9999px"
+                },
+                spacing: {
+                    "scale-base": "4px",
+                    "gutter": "16px",
+                    "margin-mobile": "12px",
+                    "container-host": "896px",
+                    "container-form": "512px"
+                },
+                fontFamily: {
+                    "display": ["Poppins"],
+                    "display-xl": ["Poppins"],
+                    "display-xl-mobile": ["Poppins"],
+                    "headline-1": ["Poppins"],
+                    "headline-2": ["Poppins"],
+                    "poppins": ["Poppins"],
+                    "body": ["Inter"],
+                    "label": ["Inter"],
+                    "caption": ["Inter"]
+                },
+                fontSize: {
+                    "display-xl": ["60px", {"lineHeight": "60px", "letterSpacing": "0.025em", "fontWeight": "800"}],
+                    "display-xl-mobile": ["48px", {"lineHeight": "48px", "fontWeight": "800"}],
+                    "display": ["36px", {"lineHeight": "40px", "fontWeight": "700"}],
+                    "headline-1": ["24px", {"lineHeight": "30px", "fontWeight": "700"}],
+                    "headline-2": ["20px", {"lineHeight": "26px", "fontWeight": "600"}],
+                    "body": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "label": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                    "caption": ["12px", {"lineHeight": "16px", "fontWeight": "400"}]
+                }
+            }
+        }
+    }
+</script>
+<style>
+    .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+    /* Immersive gameplay background (lobby, gameplay, results, join, participant screens) */
+    .hero-gradient { background: linear-gradient(135deg, #6D28D9 0%, #9333EA 50%, #DB2777 100%); }
+
+    /* Screen-specific */
+    .material-symbols-fill { font-variation-settings: 'FILL' 1, 'wght' 600, 'GRAD' 0, 'opsz' 48; }
+    .tile-tap { transition: transform .12s ease, opacity .2s ease, box-shadow .12s ease; }
+</style>
+</head>
+<body class="h-full font-body antialiased">
+
+<!-- PARTICIPANT — Question screen. Mobile-first (~390px), full-bleed. -->
+<div class="hero-gradient min-h-dvh flex flex-col">
+
+    <!-- Top slim bar: question counter + countdown -->
+    <header class="bg-primary text-on-primary px-4 py-2.5 flex items-center justify-between shrink-0">
+        <span class="bg-white/15 text-white font-label font-semibold rounded-full px-3 py-1 text-sm">Soal 3/10</span>
+        <!-- Countdown: success >5s; switch to warning (#D97706) when <=5s; error (#DC2626) when <=2s -->
+        <div id="countdownRing" class="w-11 h-11 rounded-full bg-success flex items-center justify-center shadow-lg shrink-0">
+            <span id="countdown" class="text-white font-display font-bold text-xl tabular-nums leading-none">12</span>
+        </div>
+    </header>
+
+    <!-- Question text block on light surface header -->
+    <section class="bg-surface px-5 py-5 shrink-0">
+        <h1 class="font-headline-1 text-xl sm:text-2xl text-on-surface text-center text-balance leading-snug">
+            Negara dengan penduduk terbanyak di dunia?
+        </h1>
+    </section>
+
+    <!-- Answer tiles grid: fills remaining viewport. Order is FIXED, never reordered. -->
+    <main class="flex-1 p-3">
+        <div id="answerGrid" class="grid grid-cols-2 gap-3 h-full">
+
+            <!-- Opt 1: red triangle -->
+            <button type="button" data-answer
+                class="answer-tile tile-tap bg-answer-red rounded-2xl p-6 text-white font-bold flex flex-col items-center justify-center gap-3 min-h-[110px] active:scale-[0.98]">
+                <span class="material-symbols-outlined material-symbols-fill text-5xl leading-none">change_history</span>
+                <span class="font-headline-2 text-lg sm:text-xl text-center leading-tight">China</span>
+            </button>
+
+            <!-- Opt 2: blue diamond -->
+            <button type="button" data-answer
+                class="answer-tile tile-tap bg-answer-blue rounded-2xl p-6 text-white font-bold flex flex-col items-center justify-center gap-3 min-h-[110px] active:scale-[0.98]">
+                <span class="material-symbols-outlined material-symbols-fill text-5xl leading-none">diamond</span>
+                <span class="font-headline-2 text-lg sm:text-xl text-center leading-tight">India</span>
+            </button>
+
+            <!-- Opt 3: yellow circle -->
+            <button type="button" data-answer
+                class="answer-tile tile-tap bg-answer-yellow rounded-2xl p-6 text-white font-bold flex flex-col items-center justify-center gap-3 min-h-[110px] active:scale-[0.98]">
+                <span class="material-symbols-outlined material-symbols-fill text-5xl leading-none">circle</span>
+                <span class="font-headline-2 text-lg sm:text-xl text-center leading-tight">Amerika Serikat</span>
+            </button>
+
+            <!-- Opt 4: green square -->
+            <button type="button" data-answer
+                class="answer-tile tile-tap bg-answer-green rounded-2xl p-6 text-white font-bold flex flex-col items-center justify-center gap-3 min-h-[110px] active:scale-[0.98]">
+                <span class="material-symbols-outlined material-symbols-fill text-5xl leading-none">square</span>
+                <span class="font-headline-2 text-lg sm:text-xl text-center leading-tight">Indonesia</span>
+            </button>
+
+        </div>
+    </main>
+
+    <!-- Sticky footer shown after lock (hidden by default) -->
+    <footer id="lockedBar" class="hidden bg-surface px-5 py-4 shrink-0 border-t border-border shadow-[0_-4px_16px_rgba(0,0,0,0.08)]">
+        <p class="text-center font-headline-2 text-on-surface flex items-center justify-center gap-2">
+            <span class="material-symbols-outlined material-symbols-fill text-success">check_circle</span>
+            Jawaban terkunci <span class="text-success">&#10003;</span>
+        </p>
+        <p class="text-center text-text-muted font-body text-sm mt-0.5">menunggu peserta lain</p>
+    </footer>
+
+</div>
+
+<script>
+    (function () {
+        const tiles = Array.from(document.querySelectorAll('[data-answer]'));
+        const lockedBar = document.getElementById('lockedBar');
+        let locked = false;
+
+        function selectTile(chosen) {
+            if (locked) { return; }
+            locked = true;
+
+            tiles.forEach(function (tile) {
+                if (tile === chosen) {
+                    tile.classList.add('ring-4', 'ring-white', 'scale-[0.98]');
+                } else {
+                    tile.classList.add('opacity-40');
+                }
+                tile.disabled = true;
+                tile.classList.remove('active:scale-[0.98]');
+            });
+
+            lockedBar.classList.remove('hidden');
+
+            setTimeout(() => { window.location.href = '../participant_result/code.html'; }, 1200);
+        }
+
+        tiles.forEach(function (tile) {
+            tile.addEventListener('click', function () { selectTile(tile); });
+        });
+
+        /* --- Countdown demo (visual only). Color shifts: success > warning(<=5s) > error(<=2s). --- */
+        const countdownEl = document.getElementById('countdown');
+        const ringEl = document.getElementById('countdownRing');
+        let remaining = parseInt(countdownEl.textContent, 10) || 12;
+
+        const timer = setInterval(function () {
+            remaining -= 1;
+            if (remaining < 0) { clearInterval(timer); return; }
+            countdownEl.textContent = remaining;
+
+            ringEl.classList.remove('bg-success', 'bg-warning', 'bg-error');
+            if (remaining <= 2) {
+                ringEl.classList.add('bg-error');
+            } else if (remaining <= 5) {
+                ringEl.classList.add('bg-warning');
+            } else {
+                ringEl.classList.add('bg-success');
+            }
+        }, 1000);
+    })();
+</script>
+
+</body>
+</html>

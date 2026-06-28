@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Edit Kuis — Quiz Online</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&amp;family=Inter:wght@400;500;600&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+    tailwind.config = {
+        darkMode: "class",
+        theme: {
+            extend: {
+                colors: {
+                    "primary": "#6D28D9",
+                    "primary-container": "#5B21B6",
+                    "on-primary": "#FFFFFF",
+                    "on-primary-container": "#dac5ff",
+                    "secondary": "#831ada",
+                    "on-secondary": "#ffffff",
+                    "secondary-container": "#9e41f5",
+                    "bg": "#F8FAFC",
+                    "background": "#fef7ff",
+                    "surface": "#FFFFFF",
+                    "surface-muted": "#F1F5F9",
+                    "surface-dim": "#dfd7e5",
+                    "surface-bright": "#fef7ff",
+                    "surface-container-lowest": "#ffffff",
+                    "surface-container-low": "#f9f1ff",
+                    "surface-container": "#f3ebf9",
+                    "surface-container-high": "#ede5f3",
+                    "surface-container-highest": "#e8e0ee",
+                    "surface-variant": "#e8e0ee",
+                    "on-surface": "#1d1a24",
+                    "on-surface-variant": "#4a4455",
+                    "inverse-surface": "#332f39",
+                    "inverse-on-surface": "#f6eefc",
+                    "outline": "#7b7486",
+                    "outline-variant": "#ccc3d7",
+                    "border": "#E2E8F0",
+                    "text-strong": "#0F172A",
+                    "text-muted": "#64748B",
+                    "on-background": "#1d1a24",
+                    "primary-fixed": "#ebddff",
+                    "primary-fixed-dim": "#d3bbff",
+                    "inverse-primary": "#d3bbff",
+                    "success": "#16A34A",
+                    "warning": "#D97706",
+                    "info": "#2563EB",
+                    "error": "#DC2626",
+                    "on-error": "#ffffff",
+                    "error-container": "#ffdad6",
+                    "on-error-container": "#93000a",
+                    "answer-red": "#E21B3C",
+                    "answer-blue": "#1368CE",
+                    "answer-yellow": "#D89E00",
+                    "answer-green": "#26890C",
+                    "podium-gold": "#FBBF24",
+                    "podium-silver": "#CBD5E1",
+                    "podium-bronze": "#D97706"
+                },
+                borderRadius: {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "2xl": "1rem",
+                    "full": "9999px"
+                },
+                spacing: {
+                    "scale-base": "4px",
+                    "gutter": "16px",
+                    "margin-mobile": "12px",
+                    "container-host": "896px",
+                    "container-form": "512px"
+                },
+                fontFamily: {
+                    "display": ["Poppins"],
+                    "display-xl": ["Poppins"],
+                    "display-xl-mobile": ["Poppins"],
+                    "headline-1": ["Poppins"],
+                    "headline-2": ["Poppins"],
+                    "poppins": ["Poppins"],
+                    "body": ["Inter"],
+                    "label": ["Inter"],
+                    "caption": ["Inter"]
+                },
+                fontSize: {
+                    "display-xl": ["60px", {"lineHeight": "60px", "letterSpacing": "0.025em", "fontWeight": "800"}],
+                    "display-xl-mobile": ["48px", {"lineHeight": "48px", "fontWeight": "800"}],
+                    "display": ["36px", {"lineHeight": "40px", "fontWeight": "700"}],
+                    "headline-1": ["24px", {"lineHeight": "30px", "fontWeight": "700"}],
+                    "headline-2": ["20px", {"lineHeight": "26px", "fontWeight": "600"}],
+                    "body": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "label": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                    "caption": ["12px", {"lineHeight": "16px", "fontWeight": "400"}]
+                }
+            }
+        }
+    }
+</script>
+<style>
+    .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+    /* Immersive gameplay background (lobby, gameplay, results, join, participant screens) */
+    .hero-gradient { background: linear-gradient(135deg, #6D28D9 0%, #9333EA 50%, #DB2777 100%); }
+</style>
+<style>
+    body { font-family: 'Inter', sans-serif; }
+    .font-headline-1, .font-headline-2 { font-family: 'Poppins', sans-serif; }
+    .icon-fill { font-variation-settings: 'FILL' 1; }
+    /* Peer-checked styling for correct radio rows */
+    input[type="radio"].benar-radio:checked + label .benar-text { color: #16A34A; font-weight: 600; }
+</style>
+</head>
+<body class="bg-bg text-text-strong min-h-screen">
+
+<!-- Top nav -->
+<nav class="bg-surface border-b border-border sticky top-0 z-10">
+    <div class="max-w-4xl mx-auto px-6 h-14 flex items-center justify-between">
+        <a href="../host_dashboard_no_sidebar/code.html" class="flex items-center gap-2">
+            <span class="material-symbols-outlined icon-fill text-primary" style="font-variation-settings:'FILL' 1;">quiz</span>
+            <span class="font-headline-2 font-semibold text-lg">Quiz Online</span>
+        </a>
+        <button onclick="window.location.href='../login_screen/code.html'" class="flex items-center gap-1.5 text-text-muted hover:text-text-strong text-sm font-medium">
+            <span class="material-symbols-outlined text-[20px]">logout</span>
+            Logout
+        </button>
+    </div>
+</nav>
+
+<main class="max-w-4xl mx-auto p-6">
+
+    <!-- Back link -->
+    <a href="../host_dashboard_no_sidebar/code.html" class="inline-flex items-center gap-1 text-sm text-text-muted hover:text-primary mb-4">
+        <span aria-hidden="true">←</span> Kembali ke Kuis Saya
+    </a>
+
+    <!-- Header row -->
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+        <h1 class="font-headline-1 text-2xl font-bold">Edit Kuis</h1>
+        <div class="flex items-center gap-3">
+            <!-- Draf / Terbit status toggle -->
+            <div class="inline-flex bg-surface-muted rounded-full p-1 text-sm font-medium" role="group" aria-label="Status kuis">
+                <button id="status-draf" class="px-3 py-1.5 rounded-full bg-surface shadow-sm text-text-strong" onclick="setStatus('draf')">Draf</button>
+                <button id="status-terbit" class="px-3 py-1.5 rounded-full text-text-muted" onclick="setStatus('terbit')">Terbit</button>
+            </div>
+            <button onclick="window.location.href='../host_dashboard_no_sidebar/code.html'" class="inline-flex items-center justify-center gap-1.5 min-h-[44px] px-5 rounded-lg bg-primary hover:bg-primary-container text-on-primary font-medium">
+                <span class="material-symbols-outlined text-[20px]">save</span>
+                Simpan
+            </button>
+        </div>
+    </div>
+
+    <!-- Quiz meta card -->
+    <div class="bg-surface border border-border rounded-xl p-4 shadow-sm mb-6">
+        <div class="mb-4">
+            <label for="judul" class="block text-sm font-medium text-text-strong mb-1.5">Judul Kuis</label>
+            <input id="judul" type="text" value="Kuis Pengetahuan Umum"
+                class="w-full rounded-lg border border-border px-3 py-2 focus:border-primary focus:ring-2 focus:ring-primary/30">
+        </div>
+        <div>
+            <label for="deskripsi" class="block text-sm font-medium text-text-strong mb-1.5">Deskripsi</label>
+            <textarea id="deskripsi" rows="3"
+                class="w-full rounded-lg border border-border px-3 py-2 focus:border-primary focus:ring-2 focus:ring-primary/30">Kumpulan soal seputar pengetahuan umum, geografi, dan sains dasar untuk menguji wawasan peserta.</textarea>
+        </div>
+    </div>
+
+    <!-- Daftar Soal heading -->
+    <div class="flex items-center gap-2 mb-4">
+        <h2 class="font-headline-2 text-xl font-semibold">Daftar Soal</h2>
+        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full bg-primary/10 text-primary text-xs font-medium">3 soal</span>
+    </div>
+
+    <!-- Existing question card 1 -->
+    <div class="bg-surface border border-border rounded-xl p-4 shadow-sm mb-4">
+        <div class="flex items-start justify-between gap-3 mb-3">
+            <div class="flex items-start gap-2 min-w-0">
+                <span class="shrink-0 w-7 h-7 rounded-full bg-surface-muted text-text-muted flex items-center justify-center text-sm font-semibold">1</span>
+                <p class="font-medium text-text-strong">Apa ibukota Indonesia?</p>
+            </div>
+            <div class="flex items-center gap-1 shrink-0">
+                <button class="w-9 h-9 rounded-lg hover:bg-surface-muted flex items-center justify-center text-text-muted" aria-label="Edit soal">
+                    <span class="material-symbols-outlined text-[20px]">edit</span>
+                </button>
+                <button class="w-9 h-9 rounded-lg hover:bg-error-container flex items-center justify-center text-error" aria-label="Hapus soal">
+                    <span class="material-symbols-outlined text-[20px]">delete</span>
+                </button>
+            </div>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+            <!-- correct -->
+            <div class="flex items-center gap-2.5 rounded-lg border border-success/40 bg-success/10 px-3 py-2">
+                <span class="material-symbols-outlined icon-fill text-answer-red text-[20px]" style="font-variation-settings:'FILL' 1;">change_history</span>
+                <span class="flex-1 text-sm">Jakarta</span>
+                <span class="material-symbols-outlined text-success text-[20px]">check_circle</span>
+            </div>
+            <div class="flex items-center gap-2.5 rounded-lg border border-border px-3 py-2">
+                <span class="material-symbols-outlined icon-fill text-answer-blue text-[20px]" style="font-variation-settings:'FILL' 1;">diamond</span>
+                <span class="flex-1 text-sm">Surabaya</span>
+            </div>
+            <div class="flex items-center gap-2.5 rounded-lg border border-border px-3 py-2">
+                <span class="material-symbols-outlined icon-fill text-answer-yellow text-[20px]" style="font-variation-settings:'FILL' 1;">circle</span>
+                <span class="flex-1 text-sm">Bandung</span>
+            </div>
+            <div class="flex items-center gap-2.5 rounded-lg border border-border px-3 py-2">
+                <span class="material-symbols-outlined icon-fill text-answer-green text-[20px]" style="font-variation-settings:'FILL' 1;">square</span>
+                <span class="flex-1 text-sm">Medan</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Existing question card 2 -->
+    <div class="bg-surface border border-border rounded-xl p-4 shadow-sm mb-4">
+        <div class="flex items-start justify-between gap-3 mb-3">
+            <div class="flex items-start gap-2 min-w-0">
+                <span class="shrink-0 w-7 h-7 rounded-full bg-surface-muted text-text-muted flex items-center justify-center text-sm font-semibold">2</span>
+                <p class="font-medium text-text-strong">Planet manakah yang dikenal sebagai Planet Merah?</p>
+            </div>
+            <div class="flex items-center gap-1 shrink-0">
+                <button class="w-9 h-9 rounded-lg hover:bg-surface-muted flex items-center justify-center text-text-muted" aria-label="Edit soal">
+                    <span class="material-symbols-outlined text-[20px]">edit</span>
+                </button>
+                <button class="w-9 h-9 rounded-lg hover:bg-error-container flex items-center justify-center text-error" aria-label="Hapus soal">
+                    <span class="material-symbols-outlined text-[20px]">delete</span>
+                </button>
+            </div>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+            <div class="flex items-center gap-2.5 rounded-lg border border-border px-3 py-2">
+                <span class="material-symbols-outlined icon-fill text-answer-red text-[20px]" style="font-variation-settings:'FILL' 1;">change_history</span>
+                <span class="flex-1 text-sm">Venus</span>
+            </div>
+            <!-- correct -->
+            <div class="flex items-center gap-2.5 rounded-lg border border-success/40 bg-success/10 px-3 py-2">
+                <span class="material-symbols-outlined icon-fill text-answer-blue text-[20px]" style="font-variation-settings:'FILL' 1;">diamond</span>
+                <span class="flex-1 text-sm">Mars</span>
+                <span class="material-symbols-outlined text-success text-[20px]">check_circle</span>
+            </div>
+            <div class="flex items-center gap-2.5 rounded-lg border border-border px-3 py-2">
+                <span class="material-symbols-outlined icon-fill text-answer-yellow text-[20px]" style="font-variation-settings:'FILL' 1;">circle</span>
+                <span class="flex-1 text-sm">Jupiter</span>
+            </div>
+            <div class="flex items-center gap-2.5 rounded-lg border border-border px-3 py-2">
+                <span class="material-symbols-outlined icon-fill text-answer-green text-[20px]" style="font-variation-settings:'FILL' 1;">square</span>
+                <span class="flex-1 text-sm">Saturnus</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tambah Soal authoring form card -->
+    <div class="bg-surface border border-border rounded-xl p-4 shadow-sm mt-6">
+        <h3 class="font-headline-2 text-lg font-semibold mb-4 flex items-center gap-2">
+            <span class="material-symbols-outlined text-primary text-[22px]">add_circle</span>
+            Tambah Soal
+        </h3>
+
+        <!-- Question text -->
+        <div class="mb-4">
+            <label for="new-question" class="block text-sm font-medium text-text-strong mb-1.5">Teks Soal</label>
+            <input id="new-question" type="text" placeholder="Tulis pertanyaan di sini..."
+                class="w-full rounded-lg border border-border px-3 py-2 focus:border-primary focus:ring-2 focus:ring-primary/30">
+        </div>
+
+        <!-- Options -->
+        <label class="block text-sm font-medium text-text-strong mb-1.5">Opsi Jawaban</label>
+        <div id="options-list" class="space-y-2 mb-3"></div>
+
+        <button id="add-option-btn" type="button" onclick="addOption()"
+            class="inline-flex items-center gap-1 text-sm font-medium text-primary hover:text-primary-container mb-5">
+            <span class="material-symbols-outlined text-[20px]">add</span>
+            Tambah Opsi
+        </button>
+
+        <div>
+            <button class="inline-flex items-center justify-center gap-1.5 min-h-[44px] px-5 rounded-lg bg-primary hover:bg-primary-container text-on-primary font-medium">
+                <span class="material-symbols-outlined text-[20px]">add</span>
+                Tambah Soal
+            </button>
+        </div>
+    </div>
+
+</main>
+
+<script>
+    // ---- Status toggle ----
+    function setStatus(status) {
+        const draf = document.getElementById('status-draf');
+        const terbit = document.getElementById('status-terbit');
+        const active = 'bg-surface shadow-sm text-text-strong';
+        const inactive = 'text-text-muted';
+        if (status === 'draf') {
+            draf.className = 'px-3 py-1.5 rounded-full ' + active;
+            terbit.className = 'px-3 py-1.5 rounded-full ' + inactive;
+        } else {
+            terbit.className = 'px-3 py-1.5 rounded-full ' + active;
+            draf.className = 'px-3 py-1.5 rounded-full ' + inactive;
+        }
+    }
+
+    // ---- Option authoring rows ----
+    const ANSWER_META = [
+        { color: 'answer-red',    icon: 'change_history' },
+        { color: 'answer-blue',   icon: 'diamond' },
+        { color: 'answer-yellow', icon: 'circle' },
+        { color: 'answer-green',  icon: 'square' }
+    ];
+    const MAX_OPTIONS = 4;
+    const MIN_OPTIONS = 2;
+    const optionsList = document.getElementById('options-list');
+
+    function buildRow(index) {
+        const meta = ANSWER_META[index];
+        const row = document.createElement('div');
+        row.className = 'option-row flex items-center gap-2.5';
+        row.innerHTML = `
+            <span class="shrink-0 w-9 h-9 rounded-lg bg-${meta.color} flex items-center justify-center">
+                <span class="material-symbols-outlined icon-fill text-white text-[20px]" style="font-variation-settings:'FILL' 1;">${meta.icon}</span>
+            </span>
+            <input type="text" placeholder="Opsi jawaban ${index + 1}"
+                class="flex-1 min-w-0 rounded-lg border border-border px-3 py-2 focus:border-primary focus:ring-2 focus:ring-primary/30">
+            <label class="shrink-0 inline-flex items-center gap-1.5 text-sm text-text-muted cursor-pointer">
+                <input type="radio" name="benar" class="benar-radio text-primary focus:ring-primary/30 border-border">
+                <span class="benar-text">benar</span>
+            </label>
+            <button type="button" onclick="removeOption(this)" aria-label="Hapus opsi"
+                class="remove-btn shrink-0 w-9 h-9 rounded-lg hover:bg-error-container flex items-center justify-center text-text-muted hover:text-error">
+                <span class="material-symbols-outlined text-[20px]">close</span>
+            </button>
+        `;
+        return row;
+    }
+
+    function refresh() {
+        const rows = optionsList.querySelectorAll('.option-row');
+        // enforce min: disable remove buttons when at minimum
+        rows.forEach((row) => {
+            const btn = row.querySelector('.remove-btn');
+            const disabled = rows.length <= MIN_OPTIONS;
+            btn.disabled = disabled;
+            btn.classList.toggle('opacity-30', disabled);
+            btn.classList.toggle('cursor-not-allowed', disabled);
+        });
+        // enforce max: hide add button when at maximum
+        document.getElementById('add-option-btn').classList.toggle('hidden', rows.length >= MAX_OPTIONS);
+    }
+
+    function addOption() {
+        const count = optionsList.querySelectorAll('.option-row').length;
+        if (count >= MAX_OPTIONS) { return; }
+        optionsList.appendChild(buildRow(count));
+        relabelRows();
+        refresh();
+    }
+
+    function removeOption(btn) {
+        const rows = optionsList.querySelectorAll('.option-row');
+        if (rows.length <= MIN_OPTIONS) { return; }
+        btn.closest('.option-row').remove();
+        relabelRows();
+        refresh();
+    }
+
+    // Re-color / re-icon / re-number rows by position after add/remove
+    function relabelRows() {
+        const rows = optionsList.querySelectorAll('.option-row');
+        rows.forEach((row, i) => {
+            const meta = ANSWER_META[i];
+            const badge = row.querySelector('span.shrink-0');
+            badge.className = `shrink-0 w-9 h-9 rounded-lg bg-${meta.color} flex items-center justify-center`;
+            badge.querySelector('.material-symbols-outlined').textContent = meta.icon;
+            row.querySelector('input[type="text"]').placeholder = `Opsi jawaban ${i + 1}`;
+        });
+    }
+
+    // Seed with 4 options, first marked correct
+    for (let i = 0; i < 4; i++) { optionsList.appendChild(buildRow(i)); }
+    optionsList.querySelector('.benar-radio').checked = true;
+    refresh();
+</script>
+
+</body>
+</html>

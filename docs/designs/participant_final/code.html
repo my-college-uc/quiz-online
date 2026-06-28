@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="id" class="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quiz Online — Peringkat Akhir</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&amp;family=Inter:wght@400;500;600&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+    tailwind.config = {
+        darkMode: "class",
+        theme: {
+            extend: {
+                colors: {
+                    "primary": "#6D28D9",
+                    "primary-container": "#5B21B6",
+                    "on-primary": "#FFFFFF",
+                    "on-primary-container": "#dac5ff",
+                    "secondary": "#831ada",
+                    "on-secondary": "#ffffff",
+                    "secondary-container": "#9e41f5",
+                    "bg": "#F8FAFC",
+                    "background": "#fef7ff",
+                    "surface": "#FFFFFF",
+                    "surface-muted": "#F1F5F9",
+                    "surface-dim": "#dfd7e5",
+                    "surface-bright": "#fef7ff",
+                    "surface-container-lowest": "#ffffff",
+                    "surface-container-low": "#f9f1ff",
+                    "surface-container": "#f3ebf9",
+                    "surface-container-high": "#ede5f3",
+                    "surface-container-highest": "#e8e0ee",
+                    "surface-variant": "#e8e0ee",
+                    "on-surface": "#1d1a24",
+                    "on-surface-variant": "#4a4455",
+                    "inverse-surface": "#332f39",
+                    "inverse-on-surface": "#f6eefc",
+                    "outline": "#7b7486",
+                    "outline-variant": "#ccc3d7",
+                    "border": "#E2E8F0",
+                    "text-strong": "#0F172A",
+                    "text-muted": "#64748B",
+                    "on-background": "#1d1a24",
+                    "primary-fixed": "#ebddff",
+                    "primary-fixed-dim": "#d3bbff",
+                    "inverse-primary": "#d3bbff",
+                    "success": "#16A34A",
+                    "warning": "#D97706",
+                    "info": "#2563EB",
+                    "error": "#DC2626",
+                    "on-error": "#ffffff",
+                    "error-container": "#ffdad6",
+                    "on-error-container": "#93000a",
+                    "answer-red": "#E21B3C",
+                    "answer-blue": "#1368CE",
+                    "answer-yellow": "#D89E00",
+                    "answer-green": "#26890C",
+                    "podium-gold": "#FBBF24",
+                    "podium-silver": "#CBD5E1",
+                    "podium-bronze": "#D97706"
+                },
+                borderRadius: {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "2xl": "1rem",
+                    "full": "9999px"
+                },
+                spacing: {
+                    "scale-base": "4px",
+                    "gutter": "16px",
+                    "margin-mobile": "12px",
+                    "container-host": "896px",
+                    "container-form": "512px"
+                },
+                fontFamily: {
+                    "display": ["Poppins"],
+                    "display-xl": ["Poppins"],
+                    "display-xl-mobile": ["Poppins"],
+                    "headline-1": ["Poppins"],
+                    "headline-2": ["Poppins"],
+                    "poppins": ["Poppins"],
+                    "body": ["Inter"],
+                    "label": ["Inter"],
+                    "caption": ["Inter"]
+                },
+                fontSize: {
+                    "display-xl": ["60px", {"lineHeight": "60px", "letterSpacing": "0.025em", "fontWeight": "800"}],
+                    "display-xl-mobile": ["48px", {"lineHeight": "48px", "fontWeight": "800"}],
+                    "display": ["36px", {"lineHeight": "40px", "fontWeight": "700"}],
+                    "headline-1": ["24px", {"lineHeight": "30px", "fontWeight": "700"}],
+                    "headline-2": ["20px", {"lineHeight": "26px", "fontWeight": "600"}],
+                    "body": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "label": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                    "caption": ["12px", {"lineHeight": "16px", "fontWeight": "400"}]
+                }
+            }
+        }
+    }
+</script>
+<style>
+    .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+    /* Immersive gameplay background (lobby, gameplay, results, join, participant screens) */
+    .hero-gradient { background: linear-gradient(135deg, #6D28D9 0%, #9333EA 50%, #DB2777 100%); }
+
+    /* ---- Screen-specific ---- */
+    .material-symbols-fill { font-variation-settings: 'FILL' 1, 'wght' 500, 'GRAD' 0, 'opsz' 48; }
+
+    /* Medal pop-in */
+    @keyframes medalPop {
+        0%   { transform: scale(0) rotate(-25deg); opacity: 0; }
+        60%  { transform: scale(1.15) rotate(6deg); opacity: 1; }
+        100% { transform: scale(1) rotate(0deg); opacity: 1; }
+    }
+    .animate-medal { animation: medalPop 0.7s cubic-bezier(.34,1.56,.64,1) both; }
+
+    /* Rank rise-in */
+    @keyframes riseIn {
+        from { transform: translateY(20px); opacity: 0; }
+        to   { transform: translateY(0); opacity: 1; }
+    }
+    .animate-rise { animation: riseIn 0.6s ease-out 0.25s both; }
+    .animate-rise-2 { animation: riseIn 0.6s ease-out 0.45s both; }
+    .animate-rise-3 { animation: riseIn 0.6s ease-out 0.65s both; }
+
+    /* Soft silver glow behind medal */
+    .medal-glow { box-shadow: 0 0 60px 12px rgba(203,213,225,0.45); }
+
+    /* Confetti */
+    .confetti {
+        position: absolute;
+        top: -12px;
+        width: 9px;
+        height: 14px;
+        opacity: 0;
+        border-radius: 2px;
+        animation: confettiFall linear infinite;
+    }
+    @keyframes confettiFall {
+        0%   { transform: translateY(-10vh) rotate(0deg); opacity: 0; }
+        10%  { opacity: 1; }
+        100% { transform: translateY(105vh) rotate(720deg); opacity: 0; }
+    }
+
+    /* Sparkles */
+    @keyframes sparkle {
+        0%, 100% { transform: scale(0.6); opacity: 0.25; }
+        50%      { transform: scale(1.1); opacity: 0.9; }
+    }
+    .sparkle { animation: sparkle 2.4s ease-in-out infinite; }
+</style>
+</head>
+<body class="font-body antialiased">
+
+<main class="hero-gradient relative min-h-dvh flex flex-col items-center justify-center overflow-hidden px-margin-mobile py-10 text-white text-center">
+
+    <!-- Confetti decoration -->
+    <div class="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
+        <span class="confetti" style="left:8%;  background:#FBBF24; animation-duration:4.2s; animation-delay:0s;"></span>
+        <span class="confetti" style="left:18%; background:#CBD5E1; animation-duration:3.4s; animation-delay:0.6s;"></span>
+        <span class="confetti" style="left:28%; background:#DB2777; animation-duration:4.8s; animation-delay:1.2s;"></span>
+        <span class="confetti" style="left:40%; background:#FFFFFF; animation-duration:3.8s; animation-delay:0.3s;"></span>
+        <span class="confetti" style="left:54%; background:#CBD5E1; animation-duration:4.4s; animation-delay:1.6s;"></span>
+        <span class="confetti" style="left:66%; background:#FBBF24; animation-duration:3.6s; animation-delay:0.9s;"></span>
+        <span class="confetti" style="left:78%; background:#9333EA; animation-duration:4.6s; animation-delay:0.2s;"></span>
+        <span class="confetti" style="left:88%; background:#FFFFFF; animation-duration:3.2s; animation-delay:1.4s;"></span>
+        <span class="confetti" style="left:48%; background:#CBD5E1; animation-duration:5s;   animation-delay:2s;"></span>
+        <span class="confetti" style="left:34%; background:#FBBF24; animation-duration:4s;   animation-delay:2.4s;"></span>
+    </div>
+
+    <!-- Sparkle accents -->
+    <span class="material-symbols-outlined sparkle absolute left-[12%] top-[18%] text-white/40 text-3xl" aria-hidden="true">auto_awesome</span>
+    <span class="material-symbols-outlined sparkle absolute right-[14%] top-[24%] text-podium-silver/60 text-2xl" style="animation-delay:0.8s" aria-hidden="true">auto_awesome</span>
+    <span class="material-symbols-outlined sparkle absolute right-[18%] bottom-[16%] text-white/30 text-3xl" style="animation-delay:1.4s" aria-hidden="true">auto_awesome</span>
+
+    <div class="relative z-10 flex w-full max-w-sm flex-col items-center">
+
+        <!-- Medal -->
+        <div class="animate-medal mb-6">
+            <div class="medal-glow flex h-28 w-28 items-center justify-center rounded-full bg-podium-silver/20 ring-2 ring-podium-silver/50 backdrop-blur">
+                <span class="material-symbols-outlined material-symbols-fill text-podium-silver text-7xl">military_tech</span>
+            </div>
+        </div>
+
+        <!-- Rank -->
+        <p class="animate-rise font-display text-sm uppercase tracking-[0.2em] text-white/70 mb-1">Peringkat Akhir</p>
+        <div class="animate-rise font-display-xl text-display-xl tabular-nums leading-none text-white drop-shadow-lg mb-5">
+            #2
+        </div>
+
+        <!-- Nickname pill -->
+        <div class="animate-rise-2 mb-5 inline-flex items-center gap-2 rounded-full bg-white/20 px-5 py-2.5 backdrop-blur">
+            <span class="text-xl">🦊</span>
+            <span class="font-display text-headline-2 font-semibold text-white">RubahCepat</span>
+        </div>
+
+        <!-- Final score -->
+        <div class="animate-rise-2 mb-3">
+            <div class="font-display text-display tabular-nums text-white drop-shadow">3.120 <span class="text-headline-1 font-semibold text-white/80">poin</span></div>
+        </div>
+
+        <!-- Message -->
+        <p class="animate-rise-3 mb-9 text-body text-white/85">Hebat! Kamu nyaris jadi juara. 🥈</p>
+
+        <!-- Actions -->
+        <div class="animate-rise-3 flex w-full flex-col items-center gap-3">
+            <button type="button" onclick="window.location.href='../participant_join/code.html'"
+                class="w-full min-h-[44px] rounded-xl bg-white px-5 py-4 font-display font-bold text-primary shadow-lg transition hover:bg-white/90">
+                Main Lagi
+            </button>
+            <button type="button" onclick="window.location.href='../landing_page/code.html'"
+                class="min-h-[44px] px-5 py-2 font-medium text-white/80 transition hover:text-white">
+                Keluar
+            </button>
+        </div>
+
+    </div>
+</main>
+
+</body>
+</html>

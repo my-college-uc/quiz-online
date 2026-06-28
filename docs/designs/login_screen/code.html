@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Masuk - Quiz Online</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&amp;family=Inter:wght@400;500;600&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#6D28D9",
+                        "primary-container": "#5B21B6",
+                        "on-primary": "#FFFFFF",
+                        "on-primary-container": "#dac5ff",
+                        "secondary": "#831ada",
+                        "on-secondary": "#ffffff",
+                        "secondary-container": "#9e41f5",
+                        "bg": "#F8FAFC",
+                        "background": "#fef7ff",
+                        "surface": "#FFFFFF",
+                        "surface-muted": "#F1F5F9",
+                        "surface-dim": "#dfd7e5",
+                        "surface-bright": "#fef7ff",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-low": "#f9f1ff",
+                        "surface-container": "#f3ebf9",
+                        "surface-container-high": "#ede5f3",
+                        "surface-container-highest": "#e8e0ee",
+                        "surface-variant": "#e8e0ee",
+                        "on-surface": "#1d1a24",
+                        "on-surface-variant": "#4a4455",
+                        "inverse-surface": "#332f39",
+                        "inverse-on-surface": "#f6eefc",
+                        "outline": "#7b7486",
+                        "outline-variant": "#ccc3d7",
+                        "border": "#E2E8F0",
+                        "text-strong": "#0F172A",
+                        "text-muted": "#64748B",
+                        "on-background": "#1d1a24",
+                        "primary-fixed": "#ebddff",
+                        "primary-fixed-dim": "#d3bbff",
+                        "inverse-primary": "#d3bbff",
+                        "success": "#16A34A",
+                        "warning": "#D97706",
+                        "info": "#2563EB",
+                        "error": "#DC2626",
+                        "on-error": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "on-error-container": "#93000a",
+                        "answer-red": "#E21B3C",
+                        "answer-blue": "#1368CE",
+                        "answer-yellow": "#D89E00",
+                        "answer-green": "#26890C",
+                        "podium-gold": "#FBBF24",
+                        "podium-silver": "#CBD5E1",
+                        "podium-bronze": "#D97706"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "2xl": "1rem",
+                        "full": "9999px"
+                    },
+                    spacing: {
+                        "scale-base": "4px",
+                        "gutter": "16px",
+                        "margin-mobile": "12px",
+                        "container-host": "896px",
+                        "container-form": "512px"
+                    },
+                    fontFamily: {
+                        "display": ["Poppins"],
+                        "display-xl": ["Poppins"],
+                        "display-xl-mobile": ["Poppins"],
+                        "headline-1": ["Poppins"],
+                        "headline-2": ["Poppins"],
+                        "poppins": ["Poppins"],
+                        "body": ["Inter"],
+                        "label": ["Inter"],
+                        "caption": ["Inter"]
+                    },
+                    fontSize: {
+                        "display-xl": ["60px", {"lineHeight": "60px", "letterSpacing": "0.025em", "fontWeight": "800"}],
+                        "display-xl-mobile": ["48px", {"lineHeight": "48px", "fontWeight": "800"}],
+                        "display": ["36px", {"lineHeight": "40px", "fontWeight": "700"}],
+                        "headline-1": ["24px", {"lineHeight": "30px", "fontWeight": "700"}],
+                        "headline-2": ["20px", {"lineHeight": "26px", "fontWeight": "600"}],
+                        "body": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "label": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                        "caption": ["12px", {"lineHeight": "16px", "fontWeight": "400"}]
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        /* Immersive gameplay background (lobby, gameplay, results, join, participant screens) */
+        .hero-gradient { background: linear-gradient(135deg, #6D28D9 0%, #9333EA 50%, #DB2777 100%); }
+
+        /* Floating label inputs */
+        .field { position: relative; }
+        .field input {
+            outline: none;
+        }
+        .field label {
+            position: absolute;
+            left: 1rem;
+            top: 1rem;
+            color: #4a4455;
+            pointer-events: none;
+            transition: all 0.18s ease;
+            font-size: 16px;
+        }
+        .field input:focus + label,
+        .field input:not(:placeholder-shown) + label {
+            top: 0.4rem;
+            font-size: 11px;
+            font-weight: 600;
+            color: #6D28D9;
+        }
+        .field input:focus + label .label-icon { display: none; }
+        .field input:not(:placeholder-shown) + label .label-icon { display: none; }
+        .field input:focus,
+        .field input:not(:placeholder-shown) {
+            padding-top: 1.6rem;
+            padding-bottom: 0.55rem;
+        }
+
+        /* Ripple */
+        .ripple-host { position: relative; overflow: hidden; }
+        .ripple {
+            position: absolute;
+            border-radius: 9999px;
+            transform: scale(0);
+            animation: ripple-anim 0.6s linear;
+            background: rgba(255,255,255,0.4);
+            pointer-events: none;
+        }
+        @keyframes ripple-anim {
+            to { transform: scale(4); opacity: 0; }
+        }
+    </style>
+</head>
+<body class="hero-gradient min-h-screen flex items-center justify-center font-body p-4">
+
+    <!-- Static decorative background shapes -->
+    <div class="absolute inset-0 overflow-hidden pointer-events-none opacity-20">
+        <span class="material-symbols-outlined text-white absolute" style="font-size:220px; top:-40px; left:-30px;">change_history</span>
+        <span class="material-symbols-outlined text-white absolute" style="font-size:180px; top:60px; right:-20px;">circle</span>
+        <span class="material-symbols-outlined text-white absolute" style="font-size:160px; bottom:-30px; left:8%;">square</span>
+        <span class="material-symbols-outlined text-white absolute" style="font-size:200px; bottom:40px; right:6%;">diamond</span>
+        <span class="material-symbols-outlined text-white absolute" style="font-size:120px; top:40%; left:42%;">circle</span>
+        <span class="material-symbols-outlined text-white absolute" style="font-size:130px; top:12%; left:30%;">square</span>
+    </div>
+
+    <div class="relative w-full max-w-[440px] flex flex-col items-center z-10">
+
+        <!-- Card -->
+        <div class="w-full bg-surface rounded-2xl shadow-2xl p-8 md:p-10 flex flex-col items-center">
+
+            <!-- Logo -->
+            <div class="flex items-center gap-3 mb-6 cursor-pointer" onclick="window.location.href='../landing_page/code.html'">
+                <div class="bg-primary rounded-xl w-11 h-11 flex items-center justify-center shadow-sm">
+                    <span class="material-symbols-outlined text-white" style="font-variation-settings:'FILL' 1;">quiz</span>
+                </div>
+                <span class="font-display text-2xl font-bold text-primary">Quiz Online</span>
+            </div>
+
+            <!-- Heading -->
+            <h1 class="font-poppins text-3xl font-bold text-on-surface">Masuk</h1>
+            <p class="text-on-surface-variant text-center mt-1 mb-7">Lanjutkan petualangan belajarmu!</p>
+
+            <!-- Form -->
+            <form class="w-full flex flex-col gap-4" onsubmit="return false;">
+
+                <!-- Email -->
+                <div class="field">
+                    <input id="email" type="email" placeholder=" "
+                        class="w-full bg-surface-container-low rounded-xl border-2 border-transparent px-4 py-4 text-on-surface focus:border-primary transition-colors min-h-[44px]">
+                    <label for="email">
+                        <span class="material-symbols-outlined label-icon align-middle text-[20px] text-on-surface-variant mr-1">mail</span>Email
+                    </label>
+                </div>
+
+                <!-- Password -->
+                <div class="field">
+                    <input id="password" type="password" placeholder=" "
+                        class="w-full bg-surface-container-low rounded-xl border-2 border-transparent px-4 py-4 text-on-surface focus:border-primary transition-colors min-h-[44px]">
+                    <label for="password">
+                        <span class="material-symbols-outlined label-icon align-middle text-[20px] text-on-surface-variant mr-1">lock</span>Kata Sandi
+                    </label>
+                </div>
+
+                <!-- Forgot password -->
+                <div class="text-right -mt-1">
+                    <a href="#" class="text-primary text-sm font-medium hover:underline">Lupa sandi?</a>
+                </div>
+
+                <!-- Submit -->
+                <button id="masukBtn" type="submit" onclick="window.location.href='../host_dashboard_no_sidebar/code.html'"
+                    class="ripple-host w-full bg-primary text-white rounded-xl px-5 py-3 font-semibold shadow-sm hover:bg-primary-container transition-colors min-h-[44px] flex items-center justify-center gap-2 mt-1">
+                    <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1;">login</span>
+                    Masuk
+                </button>
+            </form>
+
+            <!-- Footer -->
+            <p class="text-on-surface-variant text-sm mt-7">
+                Belum punya akun? <a href="../register_screen/code.html" class="text-secondary font-bold hover:underline">Daftar di sini</a>
+            </p>
+        </div>
+
+        <!-- Trust badges -->
+        <div class="flex items-center justify-center gap-6 mt-6 text-white">
+            <div class="flex items-center gap-2">
+                <span class="material-symbols-outlined text-[20px]" style="font-variation-settings:'FILL' 1;">lock</span>
+                <span class="text-sm font-medium">Aman &amp; Terenkripsi</span>
+            </div>
+            <div class="flex items-center gap-2">
+                <span class="material-symbols-outlined text-[20px]" style="font-variation-settings:'FILL' 1;">verified_user</span>
+                <span class="text-sm font-medium">Privasi Terjamin</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Ripple effect on Masuk button (no parallax)
+        const btn = document.getElementById('masukBtn');
+        btn.addEventListener('click', function (e) {
+            const rect = btn.getBoundingClientRect();
+            const size = Math.max(rect.width, rect.height);
+            const ripple = document.createElement('span');
+            ripple.className = 'ripple';
+            ripple.style.width = ripple.style.height = size + 'px';
+            ripple.style.left = (e.clientX - rect.left - size / 2) + 'px';
+            ripple.style.top = (e.clientY - rect.top - size / 2) + 'px';
+            btn.appendChild(ripple);
+            setTimeout(() => ripple.remove(), 600);
+        });
+    </script>
+</body>
+</html>

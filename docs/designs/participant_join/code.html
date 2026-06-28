@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Online — Gabung Kuis</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&amp;family=Inter:wght@400;500;600&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#6D28D9",
+                        "primary-container": "#5B21B6",
+                        "on-primary": "#FFFFFF",
+                        "on-primary-container": "#dac5ff",
+                        "secondary": "#831ada",
+                        "on-secondary": "#ffffff",
+                        "secondary-container": "#9e41f5",
+                        "bg": "#F8FAFC",
+                        "background": "#fef7ff",
+                        "surface": "#FFFFFF",
+                        "surface-muted": "#F1F5F9",
+                        "surface-dim": "#dfd7e5",
+                        "surface-bright": "#fef7ff",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-low": "#f9f1ff",
+                        "surface-container": "#f3ebf9",
+                        "surface-container-high": "#ede5f3",
+                        "surface-container-highest": "#e8e0ee",
+                        "surface-variant": "#e8e0ee",
+                        "on-surface": "#1d1a24",
+                        "on-surface-variant": "#4a4455",
+                        "inverse-surface": "#332f39",
+                        "inverse-on-surface": "#f6eefc",
+                        "outline": "#7b7486",
+                        "outline-variant": "#ccc3d7",
+                        "border": "#E2E8F0",
+                        "text-strong": "#0F172A",
+                        "text-muted": "#64748B",
+                        "on-background": "#1d1a24",
+                        "primary-fixed": "#ebddff",
+                        "primary-fixed-dim": "#d3bbff",
+                        "inverse-primary": "#d3bbff",
+                        "success": "#16A34A",
+                        "warning": "#D97706",
+                        "info": "#2563EB",
+                        "error": "#DC2626",
+                        "on-error": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "on-error-container": "#93000a",
+                        "answer-red": "#E21B3C",
+                        "answer-blue": "#1368CE",
+                        "answer-yellow": "#D89E00",
+                        "answer-green": "#26890C",
+                        "podium-gold": "#FBBF24",
+                        "podium-silver": "#CBD5E1",
+                        "podium-bronze": "#D97706"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "2xl": "1rem",
+                        "full": "9999px"
+                    },
+                    spacing: {
+                        "scale-base": "4px",
+                        "gutter": "16px",
+                        "margin-mobile": "12px",
+                        "container-host": "896px",
+                        "container-form": "512px"
+                    },
+                    fontFamily: {
+                        "display": ["Poppins"],
+                        "display-xl": ["Poppins"],
+                        "display-xl-mobile": ["Poppins"],
+                        "headline-1": ["Poppins"],
+                        "headline-2": ["Poppins"],
+                        "poppins": ["Poppins"],
+                        "body": ["Inter"],
+                        "label": ["Inter"],
+                        "caption": ["Inter"]
+                    },
+                    fontSize: {
+                        "display-xl": ["60px", {"lineHeight": "60px", "letterSpacing": "0.025em", "fontWeight": "800"}],
+                        "display-xl-mobile": ["48px", {"lineHeight": "48px", "fontWeight": "800"}],
+                        "display": ["36px", {"lineHeight": "40px", "fontWeight": "700"}],
+                        "headline-1": ["24px", {"lineHeight": "30px", "fontWeight": "700"}],
+                        "headline-2": ["20px", {"lineHeight": "26px", "fontWeight": "600"}],
+                        "body": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "label": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                        "caption": ["12px", {"lineHeight": "16px", "fontWeight": "400"}]
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        /* Immersive gameplay background (lobby, gameplay, results, join, participant screens) */
+        .hero-gradient { background: linear-gradient(135deg, #6D28D9 0%, #9333EA 50%, #DB2777 100%); }
+    </style>
+    <style>
+        body { font-family: "Inter", sans-serif; }
+        .material-symbols-outlined.fill { font-variation-settings: 'FILL' 1, 'wght' 500, 'GRAD' 0, 'opsz' 24; }
+        .step { transition: opacity .25s ease, transform .25s ease; }
+        .step-enter { opacity: 0; transform: translateY(8px); }
+        .step-hidden { display: none; }
+        @keyframes shake {
+            10%, 90% { transform: translateX(-2px); }
+            20%, 80% { transform: translateX(4px); }
+            30%, 50%, 70% { transform: translateX(-8px); }
+            40%, 60% { transform: translateX(8px); }
+        }
+        .shake { animation: shake .5s cubic-bezier(.36,.07,.19,.97) both; }
+        .pin-error { border-color: #DC2626 !important; box-shadow: 0 0 0 4px rgba(220,38,38,.2) !important; }
+    </style>
+</head>
+<body class="hero-gradient min-h-dvh flex flex-col text-on-surface">
+
+    <!-- Brand -->
+    <header class="pt-8 pb-2 px-4 text-center">
+        <h1 class="font-display text-white font-bold text-lg tracking-wide flex items-center justify-center gap-1.5">
+            <span class="material-symbols-outlined fill text-[22px]">bolt</span>
+            Quiz Online
+        </h1>
+    </header>
+
+    <!-- Card area -->
+    <main class="flex-1 flex flex-col items-center justify-center px-4 pb-10">
+        <div class="w-full max-w-sm mx-4 bg-surface rounded-2xl shadow-2xl p-6 sm:p-8">
+
+            <!-- STEP 1 : PIN -->
+            <section id="step-pin" class="step">
+                <div class="text-center mb-6">
+                    <h2 class="font-display text-headline-1 text-text-strong">Masukkan PIN</h2>
+                    <p class="text-text-muted text-sm mt-1.5">Minta kode PIN dari host kuis</p>
+                </div>
+
+                <form id="pin-form" novalidate>
+                    <input
+                        id="pin-input"
+                        type="text"
+                        inputmode="numeric"
+                        autocomplete="off"
+                        maxlength="6"
+                        placeholder="000000"
+                        aria-label="Kode PIN"
+                        class="w-full rounded-xl border-2 border-border px-4 py-4 text-4xl font-bold tracking-[0.3em] text-center tabular-nums text-text-strong placeholder:text-border focus:border-primary focus:ring-4 focus:ring-primary/20 outline-none transition">
+
+                    <button
+                        type="submit"
+                        class="mt-6 w-full bg-primary text-white rounded-xl px-5 py-4 font-bold shadow-lg hover:bg-primary-container min-h-[44px] transition active:scale-[.99]">
+                        Lanjut
+                    </button>
+                </form>
+            </section>
+
+            <!-- STEP 2 : Nickname -->
+            <section id="step-name" class="step step-hidden">
+                <div class="text-center mb-6">
+                    <h2 class="font-display text-headline-1 text-text-strong">Pilih Nama Panggilan</h2>
+                    <p class="text-text-muted text-sm mt-1.5">PIN <span id="pin-echo" class="font-bold text-primary tabular-nums tracking-wider"></span></p>
+                </div>
+
+                <form id="name-form" novalidate>
+                    <input
+                        id="name-input"
+                        type="text"
+                        autocomplete="off"
+                        maxlength="16"
+                        placeholder="Nama kamu"
+                        aria-label="Nama panggilan"
+                        class="w-full rounded-xl border-2 border-border px-4 py-4 text-lg font-semibold text-text-strong focus:border-primary focus:ring-4 focus:ring-primary/20 outline-none transition">
+
+                    <button
+                        type="submit"
+                        class="mt-6 w-full bg-primary text-white rounded-xl px-5 py-4 font-bold shadow-lg hover:bg-primary-container min-h-[44px] transition active:scale-[.99]">
+                        Gabung
+                    </button>
+
+                    <button
+                        type="button"
+                        id="back-btn"
+                        class="mt-4 w-full text-center text-text-muted hover:text-text-strong text-sm font-medium py-2 transition">
+                        &larr; Ganti PIN
+                    </button>
+                </form>
+            </section>
+
+        </div>
+    </main>
+
+    <script>
+        (function () {
+            const stepPin = document.getElementById('step-pin');
+            const stepName = document.getElementById('step-name');
+            const pinForm = document.getElementById('pin-form');
+            const nameForm = document.getElementById('name-form');
+            const pinInput = document.getElementById('pin-input');
+            const nameInput = document.getElementById('name-input');
+            const pinEcho = document.getElementById('pin-echo');
+            const backBtn = document.getElementById('back-btn');
+
+            // keep PIN strictly numeric
+            pinInput.addEventListener('input', function () {
+                this.value = this.value.replace(/\D/g, '').slice(0, 6);
+                this.classList.remove('pin-error', 'shake');
+            });
+
+            function showStep(toShow, toHide) {
+                toHide.classList.add('step-hidden');
+                toShow.classList.remove('step-hidden');
+                toShow.classList.add('step-enter');
+                requestAnimationFrame(function () {
+                    requestAnimationFrame(function () {
+                        toShow.classList.remove('step-enter');
+                    });
+                });
+            }
+
+            function flashError(el) {
+                el.classList.add('pin-error', 'shake');
+                el.addEventListener('animationend', function handler() {
+                    el.classList.remove('shake');
+                    el.removeEventListener('animationend', handler);
+                }, { once: true });
+            }
+
+            pinForm.addEventListener('submit', function (e) {
+                e.preventDefault();
+                const pin = pinInput.value.trim();
+                if (pin.length !== 6) {
+                    flashError(pinInput);
+                    pinInput.focus();
+                    return;
+                }
+                pinEcho.textContent = pin;
+                showStep(stepName, stepPin);
+                setTimeout(function () { nameInput.focus(); }, 50);
+            });
+
+            backBtn.addEventListener('click', function () {
+                showStep(stepPin, stepName);
+                setTimeout(function () { pinInput.focus(); }, 50);
+            });
+
+            nameForm.addEventListener('submit', function (e) {
+                e.preventDefault();
+                const name = nameInput.value.trim();
+                if (!name) {
+                    flashError(nameInput);
+                    nameInput.focus();
+                    return;
+                }
+                window.location.href = '../participant_lobby/code.html';
+            });
+        })();
+    </script>
+</body>
+</html>

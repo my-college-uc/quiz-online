@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="id" class="">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quiz Online — Kuis Saya</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&amp;family=Inter:wght@400;500;600&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+    tailwind.config = {
+        darkMode: "class",
+        theme: {
+            extend: {
+                colors: {
+                    "primary": "#6D28D9",
+                    "primary-container": "#5B21B6",
+                    "on-primary": "#FFFFFF",
+                    "on-primary-container": "#dac5ff",
+                    "secondary": "#831ada",
+                    "on-secondary": "#ffffff",
+                    "secondary-container": "#9e41f5",
+                    "bg": "#F8FAFC",
+                    "background": "#fef7ff",
+                    "surface": "#FFFFFF",
+                    "surface-muted": "#F1F5F9",
+                    "surface-dim": "#dfd7e5",
+                    "surface-bright": "#fef7ff",
+                    "surface-container-lowest": "#ffffff",
+                    "surface-container-low": "#f9f1ff",
+                    "surface-container": "#f3ebf9",
+                    "surface-container-high": "#ede5f3",
+                    "surface-container-highest": "#e8e0ee",
+                    "surface-variant": "#e8e0ee",
+                    "on-surface": "#1d1a24",
+                    "on-surface-variant": "#4a4455",
+                    "inverse-surface": "#332f39",
+                    "inverse-on-surface": "#f6eefc",
+                    "outline": "#7b7486",
+                    "outline-variant": "#ccc3d7",
+                    "border": "#E2E8F0",
+                    "text-strong": "#0F172A",
+                    "text-muted": "#64748B",
+                    "on-background": "#1d1a24",
+                    "primary-fixed": "#ebddff",
+                    "primary-fixed-dim": "#d3bbff",
+                    "inverse-primary": "#d3bbff",
+                    "success": "#16A34A",
+                    "warning": "#D97706",
+                    "info": "#2563EB",
+                    "error": "#DC2626",
+                    "on-error": "#ffffff",
+                    "error-container": "#ffdad6",
+                    "on-error-container": "#93000a",
+                    "answer-red": "#E21B3C",
+                    "answer-blue": "#1368CE",
+                    "answer-yellow": "#D89E00",
+                    "answer-green": "#26890C",
+                    "podium-gold": "#FBBF24",
+                    "podium-silver": "#CBD5E1",
+                    "podium-bronze": "#D97706"
+                },
+                borderRadius: {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "2xl": "1rem",
+                    "full": "9999px"
+                },
+                spacing: {
+                    "scale-base": "4px",
+                    "gutter": "16px",
+                    "margin-mobile": "12px",
+                    "container-host": "896px",
+                    "container-form": "512px"
+                },
+                fontFamily: {
+                    "display": ["Poppins"],
+                    "display-xl": ["Poppins"],
+                    "display-xl-mobile": ["Poppins"],
+                    "headline-1": ["Poppins"],
+                    "headline-2": ["Poppins"],
+                    "poppins": ["Poppins"],
+                    "body": ["Inter"],
+                    "label": ["Inter"],
+                    "caption": ["Inter"]
+                },
+                fontSize: {
+                    "display-xl": ["60px", {"lineHeight": "60px", "letterSpacing": "0.025em", "fontWeight": "800"}],
+                    "display-xl-mobile": ["48px", {"lineHeight": "48px", "fontWeight": "800"}],
+                    "display": ["36px", {"lineHeight": "40px", "fontWeight": "700"}],
+                    "headline-1": ["24px", {"lineHeight": "30px", "fontWeight": "700"}],
+                    "headline-2": ["20px", {"lineHeight": "26px", "fontWeight": "600"}],
+                    "body": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "label": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                    "caption": ["12px", {"lineHeight": "16px", "fontWeight": "400"}]
+                }
+            }
+        }
+    }
+</script>
+<style>
+    .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+    /* Immersive gameplay background (lobby, gameplay, results, join, participant screens) */
+    .hero-gradient { background: linear-gradient(135deg, #6D28D9 0%, #9333EA 50%, #DB2777 100%); }
+</style>
+<style>
+    body { font-family: "Inter", sans-serif; }
+    h1, h2, .font-headline-1, .font-headline-2 { font-family: "Poppins", sans-serif; }
+</style>
+</head>
+<body class="bg-bg text-text-strong min-h-screen">
+
+    <!-- Top header nav -->
+    <header class="bg-surface shadow-sm sticky top-0 z-30 h-16">
+        <div class="h-full max-w-4xl mx-auto px-gutter flex items-center justify-between">
+            <span class="font-headline-1 font-extrabold text-primary text-2xl">Quiz Online</span>
+            <button onclick="window.location.href='../login_screen/code.html'" class="flex items-center gap-2 text-error font-semibold min-h-[44px] px-3 rounded-xl hover:bg-error-container/40 transition">
+                <span class="material-symbols-outlined" aria-hidden="true">logout</span>
+                <span>Logout</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main content -->
+    <main class="max-w-4xl mx-auto p-6">
+
+        <!-- Page header row -->
+        <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between mb-6">
+            <div>
+                <h1 class="font-headline-1 text-2xl font-bold text-text-strong">Kuis Saya</h1>
+                <p class="text-text-muted mt-1">Kelola dan selenggarakan sesi kuis interaktif Anda.</p>
+            </div>
+            <button onclick="window.location.href='../quiz_editor/code.html'" class="bg-primary text-white rounded-xl px-5 py-2 font-semibold shadow-sm hover:bg-primary-container min-h-[44px] flex items-center justify-center gap-2 transition">
+                <span class="material-symbols-outlined" aria-hidden="true">add</span>
+                <span>Buat Kuis</span>
+            </button>
+        </div>
+
+        <!-- Quiz list -->
+        <div class="space-y-4">
+
+            <!-- Card 1 -->
+            <article class="bg-surface border border-border rounded-xl p-5 shadow-sm hover:shadow-md transition flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                <div class="flex items-center gap-4">
+                    <div class="w-16 h-16 rounded-lg bg-surface-container-high flex items-center justify-center shrink-0">
+                        <span class="material-symbols-outlined text-primary text-3xl" aria-hidden="true">public</span>
+                    </div>
+                    <div>
+                        <h2 class="text-xl font-semibold text-text-strong">Kuis Pengetahuan Umum</h2>
+                        <div class="flex items-center gap-3 mt-1.5 flex-wrap">
+                            <span class="rounded-full px-2.5 py-0.5 text-xs font-medium bg-success/10 text-success">Terbit</span>
+                            <span class="flex items-center gap-1 text-text-muted text-xs">
+                                <span class="material-symbols-outlined text-sm" aria-hidden="true" style="font-size:16px;">quiz</span>
+                                15 soal
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex items-center gap-2 shrink-0">
+                    <button onclick="window.location.href='../host_lobby/code.html'" class="bg-primary text-white rounded-xl px-5 py-2 font-semibold shadow-sm hover:bg-primary-container min-h-[44px] flex items-center justify-center gap-2 transition">
+                        <span class="material-symbols-outlined" aria-hidden="true" style="font-variation-settings:'FILL' 1;">play_arrow</span>
+                        <span>Mulai Host</span>
+                    </button>
+                    <button aria-label="Edit kuis" onclick="window.location.href='../quiz_editor/code.html'" class="w-11 h-11 min-h-[44px] rounded-xl flex items-center justify-center text-text-muted hover:bg-surface-muted hover:text-text-strong transition">
+                        <span class="material-symbols-outlined" aria-hidden="true">edit</span>
+                    </button>
+                    <button aria-label="Hapus kuis" class="w-11 h-11 min-h-[44px] rounded-xl flex items-center justify-center text-error hover:bg-error-container/40 transition">
+                        <span class="material-symbols-outlined" aria-hidden="true">delete</span>
+                    </button>
+                </div>
+            </article>
+
+            <!-- Card 2 (Draf, disabled host) -->
+            <article class="bg-surface border border-border rounded-xl p-5 shadow-sm hover:shadow-md transition flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                <div class="flex items-center gap-4">
+                    <div class="w-16 h-16 rounded-lg bg-surface-container-high flex items-center justify-center shrink-0">
+                        <span class="material-symbols-outlined text-primary text-3xl" aria-hidden="true">functions</span>
+                    </div>
+                    <div>
+                        <h2 class="text-xl font-semibold text-text-strong">Matematika Dasar</h2>
+                        <div class="flex items-center gap-3 mt-1.5 flex-wrap">
+                            <span class="rounded-full px-2.5 py-0.5 text-xs font-medium bg-surface-muted text-text-muted">Draf</span>
+                            <span class="flex items-center gap-1 text-text-muted text-xs">
+                                <span class="material-symbols-outlined text-sm" aria-hidden="true" style="font-size:16px;">quiz</span>
+                                0 soal
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex items-center gap-2 shrink-0">
+                    <button disabled class="bg-primary/50 text-white rounded-xl px-5 py-2 font-semibold shadow-sm opacity-50 cursor-not-allowed min-h-[44px] flex items-center justify-center gap-2">
+                        <span class="material-symbols-outlined" aria-hidden="true" style="font-variation-settings:'FILL' 1;">play_arrow</span>
+                        <span>Mulai Host</span>
+                    </button>
+                    <button aria-label="Edit kuis" onclick="window.location.href='../quiz_editor/code.html'" class="w-11 h-11 min-h-[44px] rounded-xl flex items-center justify-center text-text-muted hover:bg-surface-muted hover:text-text-strong transition">
+                        <span class="material-symbols-outlined" aria-hidden="true">edit</span>
+                    </button>
+                    <button aria-label="Hapus kuis" class="w-11 h-11 min-h-[44px] rounded-xl flex items-center justify-center text-error hover:bg-error-container/40 transition">
+                        <span class="material-symbols-outlined" aria-hidden="true">delete</span>
+                    </button>
+                </div>
+            </article>
+
+            <!-- Card 3 -->
+            <article class="bg-surface border border-border rounded-xl p-5 shadow-sm hover:shadow-md transition flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                <div class="flex items-center gap-4">
+                    <div class="w-16 h-16 rounded-lg bg-surface-container-high flex items-center justify-center shrink-0">
+                        <span class="material-symbols-outlined text-primary text-3xl" aria-hidden="true">history_edu</span>
+                    </div>
+                    <div>
+                        <h2 class="text-xl font-semibold text-text-strong">Sejarah Dunia</h2>
+                        <div class="flex items-center gap-3 mt-1.5 flex-wrap">
+                            <span class="rounded-full px-2.5 py-0.5 text-xs font-medium bg-success/10 text-success">Terbit</span>
+                            <span class="flex items-center gap-1 text-text-muted text-xs">
+                                <span class="material-symbols-outlined text-sm" aria-hidden="true" style="font-size:16px;">quiz</span>
+                                10 soal
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex items-center gap-2 shrink-0">
+                    <button onclick="window.location.href='../host_lobby/code.html'" class="bg-primary text-white rounded-xl px-5 py-2 font-semibold shadow-sm hover:bg-primary-container min-h-[44px] flex items-center justify-center gap-2 transition">
+                        <span class="material-symbols-outlined" aria-hidden="true" style="font-variation-settings:'FILL' 1;">play_arrow</span>
+                        <span>Mulai Host</span>
+                    </button>
+                    <button aria-label="Edit kuis" onclick="window.location.href='../quiz_editor/code.html'" class="w-11 h-11 min-h-[44px] rounded-xl flex items-center justify-center text-text-muted hover:bg-surface-muted hover:text-text-strong transition">
+                        <span class="material-symbols-outlined" aria-hidden="true">edit</span>
+                    </button>
+                    <button aria-label="Hapus kuis" class="w-11 h-11 min-h-[44px] rounded-xl flex items-center justify-center text-error hover:bg-error-container/40 transition">
+                        <span class="material-symbols-outlined" aria-hidden="true">delete</span>
+                    </button>
+                </div>
+            </article>
+
+        </div>
+
+        <!-- Empty state (hidden) -->
+        <article id="empty-state" class="hidden bg-surface border-2 border-dashed border-border rounded-xl p-10 text-center flex-col items-center mt-4">
+            <span class="material-symbols-outlined text-text-muted mb-3" aria-hidden="true" style="font-size:48px;">post_add</span>
+            <h2 class="text-xl font-semibold text-text-strong">Belum ada kuis.</h2>
+            <p class="text-text-muted mt-1 mb-5">Buat kuis pertama Anda sekarang dan mulai selenggarakan sesi interaktif.</p>
+            <button onclick="window.location.href='../quiz_editor/code.html'" class="bg-primary text-white rounded-xl px-5 py-2 font-semibold shadow-sm hover:bg-primary-container min-h-[44px] inline-flex items-center justify-center gap-2 transition mx-auto">
+                <span class="material-symbols-outlined" aria-hidden="true">add</span>
+                <span>Buat Kuis Baru</span>
+            </button>
+        </article>
+
+    </main>
+
+    <!-- Mobile floating action button -->
+    <button aria-label="Buat kuis" onclick="window.location.href='../quiz_editor/code.html'" class="md:hidden fixed bottom-6 right-6 w-14 h-14 rounded-full bg-primary text-white shadow-lg hover:bg-primary-container flex items-center justify-center transition z-40">
+        <span class="material-symbols-outlined" aria-hidden="true">add</span>
+    </button>
+
+</body>
+</html>
