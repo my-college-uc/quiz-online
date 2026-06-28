@@ -57,7 +57,7 @@ seketika.
 |---|---|---|
 | `users` | name, email, password (bawaan Laravel) | punya banyak `quizzes` |
 | `quizzes` | title, description, is_published | milik user; punya banyak `questions` |
-| `questions` | question_text, time_limit (detik), points_base, position | milik quiz; punya banyak `options` |
+| `questions` | question_text, image_path (nullable), time_limit (detik), points_base, position | milik quiz; punya banyak `options` |
 | `options` | option_text, is_correct, position (2–4 opsi/soal) | milik question |
 | `game_sessions` | game_pin (unik), status, current_question_index, current_question_started_at | milik quiz + host |
 | `participants` | nickname, session_token, total_score | milik game_session |
