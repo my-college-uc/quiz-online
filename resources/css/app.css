@@ -1,9 +1,94 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,100..700,0..1,0&display=swap');
 @import 'tailwindcss';
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
 
 @theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+    /* Brand colors */
+    --color-primary: #6D28D9;
+    --color-primary-container: #5B21B6;
+    --color-on-primary: #FFFFFF;
+    --color-on-primary-container: #dac5ff;
+    --color-secondary: #831ada;
+    --color-on-secondary: #ffffff;
+    --color-secondary-container: #9e41f5;
+
+    /* Background / surface */
+    --color-bg: #F8FAFC;
+    --color-background: #fef7ff;
+    --color-surface: #FFFFFF;
+    --color-surface-muted: #F1F5F9;
+    --color-surface-dim: #dfd7e5;
+    --color-surface-bright: #fef7ff;
+    --color-surface-container-lowest: #ffffff;
+    --color-surface-container-low: #f9f1ff;
+    --color-surface-container: #f3ebf9;
+    --color-surface-container-high: #ede5f3;
+    --color-surface-container-highest: #e8e0ee;
+    --color-surface-variant: #e8e0ee;
+
+    /* Text / content */
+    --color-on-surface: #1d1a24;
+    --color-on-surface-variant: #4a4455;
+    --color-on-background: #1d1a24;
+    --color-inverse-surface: #332f39;
+    --color-inverse-on-surface: #f6eefc;
+    --color-inverse-primary: #d3bbff;
+    --color-text-strong: #0F172A;
+    --color-text-muted: #64748B;
+
+    /* Outlines / borders */
+    --color-outline: #7b7486;
+    --color-outline-variant: #ccc3d7;
+    --color-border: #E2E8F0;
+
+    /* Fixed / extended */
+    --color-primary-fixed: #ebddff;
+    --color-primary-fixed-dim: #d3bbff;
+
+    /* Semantic */
+    --color-success: #16A34A;
+    --color-warning: #D97706;
+    --color-info: #2563EB;
+    --color-error: #DC2626;
+    --color-on-error: #ffffff;
+    --color-error-container: #ffdad6;
+    --color-on-error-container: #93000a;
+
+    /* Quiz answer tile colors (fixed by position) */
+    --color-answer-red: #E21B3C;
+    --color-answer-blue: #1368CE;
+    --color-answer-yellow: #D89E00;
+    --color-answer-green: #26890C;
+
+    /* Leaderboard podium */
+    --color-podium-gold: #FBBF24;
+    --color-podium-silver: #CBD5E1;
+    --color-podium-bronze: #D97706;
+
+    /* Typography */
+    --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+    --font-display: 'Poppins', sans-serif;
+    --font-poppins: 'Poppins', sans-serif;
+    --font-body: 'Inter', sans-serif;
+    --font-label: 'Inter', sans-serif;
+    --font-caption: 'Inter', sans-serif;
+
+    /* Border radius */
+    --radius: 0.25rem;
+    --radius-lg: 0.5rem;
+    --radius-xl: 0.75rem;
+    --radius-2xl: 1rem;
+    --radius-full: 9999px;
+}
+
+/* Material Symbols default settings */
+.material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+/* Immersive gradient: lobby, gameplay, results, join, participant screens */
+.hero-gradient {
+    background: linear-gradient(135deg, #6D28D9 0%, #9333EA 50%, #DB2777 100%);
 }
