@@ -175,7 +175,10 @@
         <div class="flex items-start justify-between gap-3 mb-3">
             <div class="flex items-start gap-2 min-w-0">
                 <span class="shrink-0 w-7 h-7 rounded-full bg-surface-muted text-text-muted flex items-center justify-center text-sm font-semibold">1</span>
-                <p class="font-medium text-text-strong">Apa ibukota Indonesia?</p>
+                <div class="min-w-0">
+                    <p class="font-medium text-text-strong">Apa ibukota Indonesia?</p>
+                    <img src="https://placehold.co/160x100/png" alt="Gambar soal" class="mt-2 rounded-lg border border-border max-h-40 object-contain">
+                </div>
             </div>
             <div class="flex items-center gap-1 shrink-0">
                 <button class="w-9 h-9 rounded-lg hover:bg-surface-muted flex items-center justify-center text-text-muted" aria-label="Edit soal">
@@ -260,6 +263,28 @@
                 class="w-full rounded-lg border border-border px-3 py-2 focus:border-primary focus:ring-2 focus:ring-primary/30">
         </div>
 
+        <!-- Question image (optional) -->
+        <div class="mb-4">
+            <label class="block text-sm font-medium text-text-strong mb-1.5">Gambar Soal</label>
+            <input id="new-image-input" type="file" accept="image/*" class="hidden" onchange="handleImageSelect(this)">
+
+            <!-- Drop area (default state) -->
+            <label id="image-drop" for="new-image-input"
+                class="flex flex-col items-center justify-center gap-1 w-full rounded-xl border-2 border-dashed border-border px-4 py-6 text-text-muted hover:border-primary hover:text-primary cursor-pointer">
+                <span class="material-symbols-outlined text-[32px]">add_photo_alternate</span>
+                <span class="text-sm font-medium">Tambah gambar soal (opsional)</span>
+            </label>
+
+            <!-- Preview state (hidden until a file is chosen) -->
+            <div id="image-preview" class="hidden relative inline-block">
+                <img id="image-preview-img" src="" alt="Pratinjau gambar soal" class="rounded-lg border border-border max-h-40 object-contain">
+                <button type="button" onclick="clearImage()" aria-label="Hapus gambar"
+                    class="absolute -top-2 -right-2 w-6 h-6 rounded-full bg-surface border border-border shadow-sm flex items-center justify-center text-text-muted hover:text-error hover:bg-error-container">
+                    <span class="material-symbols-outlined text-[16px]">close</span>
+                </button>
+            </div>
+        </div>
+
         <!-- Options -->
         <label class="block text-sm font-medium text-text-strong mb-1.5">Opsi Jawaban</label>
         <div id="options-list" class="space-y-2 mb-3"></div>
@@ -294,6 +319,26 @@
             terbit.className = 'px-3 py-1.5 rounded-full ' + active;
             draf.className = 'px-3 py-1.5 rounded-full ' + inactive;
         }
+    }
+
+    // ---- Question image upload + preview ----
+    function handleImageSelect(input) {
+        const file = input.files && input.files[0];
+        if (!file) { return; }
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            document.getElementById('image-preview-img').src = e.target.result;
+            document.getElementById('image-drop').classList.add('hidden');
+            document.getElementById('image-preview').classList.remove('hidden');
+        };
+        reader.readAsDataURL(file);
+    }
+
+    function clearImage() {
+        document.getElementById('new-image-input').value = '';
+        document.getElementById('image-preview-img').src = '';
+        document.getElementById('image-preview').classList.add('hidden');
+        document.getElementById('image-drop').classList.remove('hidden');
     }
 
     // ---- Option authoring rows ----

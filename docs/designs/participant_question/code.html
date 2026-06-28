@@ -129,6 +129,12 @@
         </h1>
     </section>
 
+    <!-- render only when image_path exists (null-safe) -->
+    <section class="bg-surface px-5 pb-5 shrink-0">
+        <img src="https://placehold.co/480x240/png" alt="Gambar soal"
+            class="w-full max-h-40 object-contain rounded-xl mx-auto">
+    </section>
+
     <!-- Answer tiles grid: fills remaining viewport. Order is FIXED, never reordered. -->
     <main class="flex-1 p-3">
         <div id="answerGrid" class="grid grid-cols-2 gap-3 h-full">
